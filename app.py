@@ -51,6 +51,12 @@ def update_map(category, industry, experience):
                         scope='usa',
                         labels={'Medium_Salary': 'Medium Salary'},
                         hover_data={'State': True, 'Medium_Salary': True, 'Data_Count': True})
+
+    # Formateo del tooltip
+    fig.update_traces(
+        hovertemplate='<b>%{location}</b><br>Medium Salary: $%{z:,.2f}<br>Data Count: %{customdata[0]}<extra></extra>'
+    )
+
     fig.update_layout(title='Medium Salary by State', geo=dict(scope='usa'))
     st.plotly_chart(fig)
 

@@ -84,11 +84,11 @@ def plot_salary_by_state(category, industry, experience):
         filtered_df = filtered_df[filtered_df['Experience Level'] == experience]
 
     # Apply formatting to the 'Medium Salary' column
-    filtered_df['Formatted Salary'] = filtered_df['Medium Salary'].apply(format_salary)
+    filtered_df['Medium Salary'] = filtered_df['Medium Salary'].apply(format_salary)
     
     # Create the scatter plot using the formatted salary for hover data
     fig = px.scatter(filtered_df, x='State', y='Medium Salary', size='Medium Salary',
-                     hover_data={'State': True, 'Medium Salary': False, 'Formatted Salary': True},
+                     hover_data={'State': True, 'Medium Salary': True},
                      title='Medium Salary by State')
 
     st.plotly_chart(fig)

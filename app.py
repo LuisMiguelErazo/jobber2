@@ -113,16 +113,13 @@ def plot_salary_distribution(category, industry):
     st.plotly_chart(fig)
 
 # Función para insights de salario
-def plot_salary_insights(category, df):
+def plot_salary_insights(category):
     filtered_df = df.copy()
     if category != 'All':
         filtered_df = filtered_df[filtered_df['Category'] == category]
 
     fig = px.box(filtered_df, x='Category', y='Medium Salary',
                  title='Salary Insights by Category')
-    
-    fig.update_traces(hovertemplate='Medium Salary: $%{y:,.2f}')
-    
     st.plotly_chart(fig)
 
 # Map tab

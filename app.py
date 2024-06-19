@@ -40,10 +40,9 @@ def update_map(category, industry, experience):
         filtered_df = filtered_df[filtered_df['Experience Level'] == experience]
 
     state_salary = filtered_df.groupby('State').agg(
-        Medium_Salary=('Medium Salary', 'mean')
+        Medium_Salary=('Medium Salary', 'mean'),
+        Data_Count=('Medium Salary', 'size')
     ).reset_index()
-
-    state_salary['Medium_Salary'] = state_salary['Medium_Salary'].apply(lambda x: f"${x:,.2f}")
 
     fig = px.choropleth(state_salary,
                         locations='State',
@@ -52,7 +51,7 @@ def update_map(category, industry, experience):
                         color_continuous_scale='Viridis',
                         scope='usa',
                         labels={'Medium_Salary': 'Medium Salary'},
-                        hover_data={'State': True, 'Medium_Salary': True})
+                        hover_data={'State': True, 'Medium_Salary': True, 'Data_Count': True})
     fig.update_layout(title='Medium Salary by State', geo=dict(scope='usa'))
     st.plotly_chart(fig)
 
@@ -80,8 +79,6 @@ def plot_salary_by_state(category, industry, experience):
     if experience != 'All':
         filtered_df = filtered_df[filtered_df['Experience Level'] == experience]
 
-    filtered_df['Medium Salary'] = filtered_df['Medium Salary'].apply(lambda x: f"${x:,.2f}")
-
     fig = px.scatter(filtered_df, x='State', y='Medium Salary', size='Medium Salary',
                      hover_data=['State', 'Medium Salary'],
                      title='Medium Salary by State')
@@ -95,12 +92,7 @@ def plot_salary_distribution(category, industry):
     if industry != 'All':
         filtered_df = filtered_df[filtered_df['Industry'] == industry]
 
-    experience_salary = filtered_df.groupby('Experience Level').agg(
-        Medium_Salary=('Medium Salary', 'mean')
-    ).reset_index()
-    experience_salary['Medium_Salary'] = experience_salary['Medium_Salary'].apply(lambda x: f"${x:,.2f}")
-
-    fig = px.bar(experience_salary, x='Experience Level', y='Medium Salary', color='Experience Level',
+    fig = px.bar(filtered_df, x='Experience Level', y='Medium Salary', color='Experience Level',
                  title='Salary Distribution by Experience Level')
     st.plotly_chart(fig)
 
@@ -112,7 +104,6 @@ def plot_salary_insights(category):
 
     fig = px.box(filtered_df, x='Category', y='Medium Salary',
                  title='Salary Insights by Category')
-    fig.update_yaxes(tickprefix="$", title='Medium Salary')
     st.plotly_chart(fig)
 
 

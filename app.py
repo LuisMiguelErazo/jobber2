@@ -29,7 +29,6 @@ experience = st.selectbox('Experience Level', experiences)
 # Pestañas
 tab1, tab2, tab3, tab4, tab5 = st.tabs(['Map', 'Salary by State', 'Key Skills', 'Salary Distribution', 'Salary Insights'])
 
-# Función para actualizar el mapa
 def update_map(category, industry, experience):
     filtered_df = df.copy()
     if category != 'All':
@@ -43,7 +42,8 @@ def update_map(category, industry, experience):
         Medium_Salary=('Medium Salary', 'mean'),
     ).reset_index()
 
-state_salary['Medium_Salary'] = state_salary['Medium_Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+    # Formatear los números como dólares con puntos como separador de miles y comas como separador de decimales
+    state_salary['Medium_Salary'] = state_salary['Medium_Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
     fig = px.choropleth(state_salary,
                         locations='State',

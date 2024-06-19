@@ -2,4 +2,4 @@ pandas
 plotly
 streamlit
 wordcloud
-matplolib
+matplotlib

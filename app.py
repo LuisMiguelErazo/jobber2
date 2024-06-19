@@ -120,6 +120,12 @@ def plot_salary_insights(category):
 
     fig = px.box(filtered_df, x='Category', y='Medium Salary',
                  title='Salary Insights by Category')
+
+    # Formateo del tooltip
+    fig.update_traces(
+        hovertemplate='<b>%{x}</b><br>Medium Salary: $%{y:,.2f}<extra></extra>'
+    )
+
     st.plotly_chart(fig)
 
 # Map tab

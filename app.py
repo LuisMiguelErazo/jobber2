@@ -53,7 +53,7 @@ def update_map(category, industry, experience):
 
     # Formateo del tooltip
     fig.update_traces(
-        hovertemplate='<b>%{location}</b><br>Medium Salary: $%{z:,.2f}<br>Data Count: %{customdata[0]}<extra></extra>'
+        hovertemplate='<b>%{location}</b><br>Medium Salary: $%{z:,.2f}'
     )
 
     fig.update_layout(title='Medium Salary by State', geo=dict(scope='usa'))

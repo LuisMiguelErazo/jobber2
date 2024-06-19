@@ -93,7 +93,11 @@ def plot_salary_distribution(category, industry):
     if industry != 'All':
         filtered_df = filtered_df[filtered_df['Industry'] == industry]
 
-    fig = px.bar(filtered_df, x='Experience Level', y='Medium Salary', color='Experience Level',
+    # Agrupar por 'Experience Level' y calcular el promedio de 'Medium Salary'
+    grouped_df = filtered_df.groupby('Experience Level', as_index=False)['Medium Salary'].mean()
+
+    # Crear el gráfico de barras
+    fig = px.bar(grouped_df, x='Experience Level', y='Medium Salary', color='Experience Level',
                  title='Salary Distribution by Experience Level')
     st.plotly_chart(fig)
 

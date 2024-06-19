@@ -10,7 +10,18 @@ with zipfile.ZipFile('map_skills.zip', 'r') as zipf:
         df = pd.read_csv(f)
 
 # Título del Dashboard
-st.title('Interactive Salary and Skills Dashboard')
+st.title('EarnWise')
+
+# Párrafo de bienvenida
+st.write('''
+Welcome to EarnWise!
+
+The easiest, fastest and most transparent way to find salary information in your Sector/Industry.
+
+At this time, we only have information for the United States.
+
+Help us collect information from other countries by posting your information in the tab "Help Us Grow".
+''')
 
 # Filtros encadenados
 categories = sorted(df['Category'].unique().tolist())

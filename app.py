@@ -41,7 +41,6 @@ def update_map(category, industry, experience):
 
     state_salary = filtered_df.groupby('State').agg(
         Medium_Salary=('Medium Salary', 'mean'),
-        Data_Count=('Medium Salary', 'size')
     ).reset_index()
 
     fig = px.choropleth(state_salary,
@@ -51,7 +50,7 @@ def update_map(category, industry, experience):
                         color_continuous_scale='Viridis',
                         scope='usa',
                         labels={'Medium_Salary': 'Medium Salary'},
-                        hover_data={'State': True, 'Medium_Salary': True, 'Data_Count': True})
+                        hover_data={'State': True, 'Medium_Salary': True})
     fig.update_layout(title='Medium Salary by State', geo=dict(scope='usa'))
     st.plotly_chart(fig)
 

@@ -42,17 +42,17 @@ def update_map(category, industry, experience):
         Medium_Salary=('Medium Salary', 'mean'),
     ).reset_index()
 
-    # Formatear los números como dólares con puntos como separador de miles y comas como separador de decimales
-    state_salary['Medium_Salary'] = state_salary['Medium_Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+    # Crear una columna formateada para los datos emergentes (hover)
+    state_salary['Formatted_Salary'] = state_salary['Medium_Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
     fig = px.choropleth(state_salary,
                         locations='State',
                         locationmode='USA-states',
                         color='Medium_Salary',
-                        color_continuous_scale='Viridis',
+                        color_continuous_scale='Viridis',  # Mantener la paleta de colores original
                         scope='usa',
                         labels={'Medium_Salary': 'Medium Salary'},
-                        hover_data={'State': True, 'Medium_Salary': True})
+                        hover_data={'State': True, 'Medium_Salary': False, 'Formatted_Salary': True})
     fig.update_layout(title='Medium Salary by State', geo=dict(scope='usa'))
     st.plotly_chart(fig)
 

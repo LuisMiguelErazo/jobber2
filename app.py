@@ -39,8 +39,7 @@ def update_map(category, industry, experience):
         filtered_df = filtered_df[filtered_df['Experience Level'] == experience]
 
     state_salary = filtered_df.groupby('State').agg(
-        Medium_Salary=('Medium Salary', 'mean'),
-        Data_Count=('Medium Salary', 'size')
+        Medium_Salary=('Medium Salary', 'mean')
     ).reset_index()
 
     fig = px.choropleth(state_salary,
@@ -50,7 +49,7 @@ def update_map(category, industry, experience):
                         color_continuous_scale='Viridis',
                         scope='usa',
                         labels={'Medium_Salary': 'Medium Salary'},
-                        hover_data={'State': True, 'Medium_Salary': True, 'Data_Count': True})
+                        hover_data={'State': True, 'Medium_Salary': True})
 
     # Formateo del tooltip
     fig.update_traces(

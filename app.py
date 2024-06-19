@@ -5,7 +5,6 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import zipfile
 
-# Cargar el archivo CSV
 with zipfile.ZipFile('map_skills.zip', 'r') as zipf:
     with zipf.open('map_skills.csv') as f:
         df = pd.read_csv(f)
@@ -71,9 +70,6 @@ def plot_wordcloud(category):
         st.write('Select a Category to Display Word Cloud')
 
 # Función para scatter plot de salarios por estado
-def format_salary(value):
-    return f"${value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-
 def plot_salary_by_state(category, industry, experience):
     filtered_df = df.copy()
     if category != 'All':
@@ -83,14 +79,9 @@ def plot_salary_by_state(category, industry, experience):
     if experience != 'All':
         filtered_df = filtered_df[filtered_df['Experience Level'] == experience]
 
-    # Apply formatting to the 'Medium Salary' column
-    filtered_df['Medium Salary'] = filtered_df['Medium Salary'].apply(format_salary)
-    
-    # Create the scatter plot using the formatted salary for hover data
     fig = px.scatter(filtered_df, x='State', y='Medium Salary', size='Medium Salary',
-                     hover_data={'State': True, 'Medium Salary': True},
+                     hover_data=['State', 'Medium Salary'],
                      title='Medium Salary by State')
-
     st.plotly_chart(fig)
 
 # Función para distribución de salarios
@@ -101,20 +92,8 @@ def plot_salary_distribution(category, industry):
     if industry != 'All':
         filtered_df = filtered_df[filtered_df['Industry'] == industry]
 
-    # Agrupar por 'Experience Level' y calcular el promedio de 'Medium Salary'
-    grouped_df = filtered_df.groupby('Experience Level', as_index=False)['Medium Salary'].mean()
-
-    # Ordenar el DataFrame por 'Medium Salary' de menor a mayor
-    grouped_df = grouped_df.sort_values(by='Medium Salary')
-
-    # Crear el gráfico de barras con formato de número personalizado
-    fig = px.bar(grouped_df, x='Experience Level', y='Medium Salary', color='Experience Level',
+    fig = px.bar(filtered_df, x='Experience Level', y='Medium Salary', color='Experience Level',
                  title='Salary Distribution by Experience Level')
-    fig.update_traces(texttemplate='$%{y:,.2f}', textposition='outside')
-
-    # Actualizar el eje y para tener el mismo formato
-    fig.update_layout(yaxis_tickformat='$,.2f')
-
     st.plotly_chart(fig)
 
 # Función para insights de salario

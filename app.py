@@ -3,7 +3,6 @@ import plotly.express as px
 import streamlit as st
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-import us
 import zipfile
 
 # Cargar el archivo CSV
@@ -44,19 +43,16 @@ def update_map(category, industry, experience):
     ).reset_index()
 
     # Crear una columna formateada para los datos emergentes (hover)
-    state_salary['Medium Salary'] = state_salary['Medium_Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
-
-    # Agregar el nombre completo del estado
-    state_salary['State Full'] = state_salary['State'].map(lambda x: us.states.lookup(x).name)
+    state_salary['Mean_Salary'] = state_salary['Medium_Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
     fig = px.choropleth(state_salary,
                         locations='State',
                         locationmode='USA-states',
                         color='Medium_Salary',
-                        color_continuous_scale='Viridis',
+                        color_continuous_scale='Viridis',  # Mantener la paleta de colores original
                         scope='usa',
                         labels={'Medium_Salary': 'Medium Salary'},
-                        hover_data={'State': False, 'Medium_Salary': False, 'Medium Salary': True, 'State Full': True})
+                        hover_data={'State': True, 'Medium_Salary': False, 'Mean_Salary': True})
     fig.update_layout(title='Medium Salary by State', geo=dict(scope='usa'))
     st.plotly_chart(fig)
 

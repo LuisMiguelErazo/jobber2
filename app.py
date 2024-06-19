@@ -43,7 +43,7 @@ def update_map(category, industry, experience):
     ).reset_index()
 
     # Crear una columna formateada para los datos emergentes (hover)
-    state_salary['Formatted_Salary'] = state_salary['Medium_Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+    state_salary['Medium_Salary'] = state_salary['Medium_Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
     fig = px.choropleth(state_salary,
                         locations='State',

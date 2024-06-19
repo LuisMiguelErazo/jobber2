@@ -38,11 +38,11 @@ def update_map(category, industry, experience):
         filtered_df = filtered_df[filtered_df['Experience Level'] == experience]
 
     state_salary = filtered_df.groupby('State').agg(
-        Medium_Salary=('Medium Salary', 'mean'),
+        Salary=('Medium Salary', 'mean'),
     ).reset_index()
 
     # Crear una columna formateada para los datos emergentes (hover)
-    state_salary['Mean_Salary'] = state_salary['Medium_Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+    state_salary['Medium_Salary'] = state_salary['Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
     fig = px.choropleth(state_salary,
                         locations='State',
@@ -51,7 +51,7 @@ def update_map(category, industry, experience):
                         color_continuous_scale='Viridis',
                         scope='usa',
                         labels={'Medium_Salary': 'Medium Salary'},
-                        hover_data={'State': True, 'Medium_Salary': False, 'Mean_Salary': True})
+                        hover_data={'State': True,'Medium Salary': True})
     fig.update_layout(title='Medium Salary by State', geo=dict(scope='usa'))
     st.plotly_chart(fig)
 

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import zipfile
 
 # Cargar el archivo CSV
-with zipfile.ZipFile('map_skills.csv', 'r') as zipf:
+with zipfile.ZipFile('map_skills.zip', 'r') as zipf:
     with zipf.open('map_skills.csv') as f:
         df = pd.read_csv(f)
 

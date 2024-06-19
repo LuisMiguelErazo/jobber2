@@ -80,8 +80,12 @@ def plot_salary_by_state(category, industry, experience):
         filtered_df = filtered_df[filtered_df['Experience Level'] == experience]
 
     fig = px.scatter(filtered_df, x='State', y='Medium Salary', size='Medium Salary',
-                     hover_data=['State', 'Medium Salary'],
                      title='Medium Salary by State')
+
+    fig.update_traces(
+        hovertemplate='<b>State:</b> %{x}<br><b>Medium Salary:</b> $%{y:,.2f}<extra></extra>'
+    )
+    
     st.plotly_chart(fig)
 
 # Función para distribución de salarios

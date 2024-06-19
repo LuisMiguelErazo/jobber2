@@ -26,7 +26,7 @@ experiences = ['All'] + sorted(experiences.tolist())
 experience = st.selectbox('Experience Level', experiences)
 
 # Pestañas
-tab1, tab2, tab3, tab4, tab5 = st.tabs(['Map', 'Salary by State', 'Key Skills', 'Salary Distribution', 'Salary Insights'])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(['Map', 'Salary by State', 'Key Skills', 'Salary Distribution', 'Salary Insights', 'Help Us Grow'])
 
 # Función para actualizar el mapa
 def update_map(category, industry, experience):
@@ -151,3 +151,19 @@ with tab4:
 # Salary Insights tab
 with tab5:
     plot_salary_insights(category)
+
+# Help Us Grow tab
+with tab6:
+    st.header('Help Us Grow')
+    with st.form(key='help_us_grow_form'):
+        country = st.text_input('Country:')
+        state = st.text_input('State:')
+        category_input = st.text_input('Category:')
+        industry_input = st.text_input('Industry:')
+        experience_level = st.text_input('Experience Level:')
+        salary = st.text_input('Salary:')
+        
+        submit_button = st.form_submit_button(label='Submit')
+    
+    if submit_button:
+        st.write('Thank you for your submission!')

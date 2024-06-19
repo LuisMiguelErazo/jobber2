@@ -28,6 +28,7 @@ experience = st.selectbox('Experience Level', experiences)
 # Pestañas
 tab1, tab2, tab3, tab4, tab5 = st.tabs(['Map', 'Salary by State', 'Key Skills', 'Salary Distribution', 'Salary Insights'])
 
+# Función para actualizar el mapa
 def update_map(category, industry, experience):
     filtered_df = df.copy()
     if category != 'All':
@@ -38,11 +39,9 @@ def update_map(category, industry, experience):
         filtered_df = filtered_df[filtered_df['Experience Level'] == experience]
 
     state_salary = filtered_df.groupby('State').agg(
-        Salary=('Medium Salary', 'mean'),
+        Medium_Salary=('Medium Salary', 'mean'),
+        Data_Count=('Medium Salary', 'size')
     ).reset_index()
-
-    # Crear una columna formateada para los datos emergentes (hover)
-    state_salary['Medium_Salary'] = state_salary['Salary'].map(lambda x: f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
     fig = px.choropleth(state_salary,
                         locations='State',
@@ -51,7 +50,7 @@ def update_map(category, industry, experience):
                         color_continuous_scale='Viridis',
                         scope='usa',
                         labels={'Medium_Salary': 'Medium Salary'},
-                        hover_data={'State': True,'Medium Salary': True})
+                        hover_data={'State': True, 'Medium_Salary': True, 'Data_Count': True})
     fig.update_layout(title='Medium Salary by State', geo=dict(scope='usa'))
     st.plotly_chart(fig)
 

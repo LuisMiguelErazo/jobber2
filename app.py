@@ -96,6 +96,9 @@ def plot_salary_distribution(category, industry):
     # Agrupar por 'Experience Level' y calcular el promedio de 'Medium Salary'
     grouped_df = filtered_df.groupby('Experience Level', as_index=False)['Medium Salary'].mean()
 
+    # Ordenar el DataFrame por 'Medium Salary' de menor a mayor
+    grouped_df = grouped_df.sort_values(by='Medium Salary')
+
     # Crear el gráfico de barras con formato de número personalizado
     fig = px.bar(grouped_df, x='Experience Level', y='Medium Salary', color='Experience Level',
                  title='Salary Distribution by Experience Level')
